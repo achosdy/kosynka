@@ -1,0 +1,32 @@
+{
+  "id": "./",
+  "name": "Пасьянс «Косынка» — Темы",
+  "short_name": "Косынка",
+  "description": "Офлайн-пасьянс Косынка с десятью локальными темами, подсказками, отменой ходов и рекордами.",
+  "lang": "ru",
+  "dir": "ltr",
+  "start_url": "./?source=pwa",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#075c3c",
+  "theme_color": "#075c3c",
+  "categories": ["games", "entertainment"],
+  "prefer_related_applications": false,
+  "icons": [
+    { "src": "./assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "./assets/icons/icon-256.png", "sizes": "256x256", "type": "image/png", "purpose": "any" },
+    { "src": "./assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "./assets/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    {
+      "name": "Новая игра",
+      "short_name": "Новая",
+      "description": "Открыть Косынку и начать новую раздачу",
+      "url": "./?new=1",
+      "icons": [{ "src": "./assets/icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}

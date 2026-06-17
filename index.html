@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+  <meta name="theme-color" content="#075c3c">
+  <meta name="description" content="Офлайн-пасьянс «Косынка» с десятью локальными темами, подсказками, отменой ходов и установкой как приложение.">
+  <meta name="application-name" content="Косынка">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Косынка">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="msapplication-TileColor" content="#075c3c">
+  <meta name="msapplication-config" content="./browserconfig.xml">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./assets/icons/kosynka.ico">
+  <link rel="icon" href="./assets/icons/icon-32.png" sizes="32x32">
+  <link rel="icon" href="./assets/icons/icon-192.png" sizes="192x192">
+  <link rel="apple-touch-icon" href="./assets/icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="./styles.css">
+  <title>Пасьянс «Косынка»</title>
+</head>
+<body data-theme="default">
+  <div class="app-shell">
+    <div class="theme-backdrop" aria-hidden="true"></div>
+    <div id="particles" class="particles" aria-hidden="true"></div>
+
+    <header class="app-header">
+      <div class="brand" aria-label="Пасьянс Косынка">
+        <img src="./assets/icons/icon-64.png" alt="" width="38" height="38">
+        <div>
+          <strong>Косынка</strong>
+          <span id="themeCaption">Классический стол</span>
+        </div>
+      </div>
+
+      <div class="stats" aria-live="polite">
+        <div class="stat"><span>Ходы</span><strong id="movesValue">0</strong></div>
+        <div class="stat"><span>Рекорд</span><strong id="bestValue">—</strong></div>
+        <div class="stat stat-time"><span>Время</span><strong id="timeValue">00:00</strong></div>
+        <div class="stat stat-passes"><span>Пересдачи</span><strong id="redealsValue">2</strong></div>
+      </div>
+
+      <nav class="toolbar" aria-label="Управление игрой">
+        <button class="tool primary" id="newGameBtn" type="button" title="Новая игра (N)"><span class="tool-icon">▶</span><span>Новая</span></button>
+        <button class="tool" id="restartBtn" type="button" title="Начать заново (R)"><span class="tool-icon">↻</span><span>Заново</span></button>
+        <button class="tool" id="undoBtn" type="button" title="Отменить ход (U)"><span class="tool-icon">↶</span><span>Отменить</span></button>
+        <button class="tool" id="hintBtn" type="button" title="Подсказать ход (H)"><span class="tool-icon">💡</span><span>Подсказка</span></button>
+        <button class="tool" id="themesBtn" type="button" title="Выбрать тему (T)"><span class="tool-icon">🎨</span><span>Темы</span></button>
+        <button class="tool compact" id="rulesBtn" type="button" title="Правила (?)" aria-label="Правила"><span class="tool-icon">?</span></button>
+        <button class="tool compact" id="soundBtn" type="button" title="Звук" aria-pressed="true" aria-label="Выключить звук"><span class="tool-icon">🔊</span></button>
+        <button class="tool install" id="installBtn" type="button" title="Установить приложение"><span class="tool-icon">⇩</span><span>Установить</span></button>
+        <button class="tool ios" id="iosBtn" type="button" title="Как добавить на экран iPhone"><span class="tool-icon">📱</span><span>На iPhone</span></button>
+      </nav>
+    </header>
+
+    <main class="game-area" id="gameArea">
+      <div class="game-message" id="gameMessage" role="status" aria-live="polite"></div>
+
+      <section class="board" id="board" aria-label="Игровое поле пасьянса Косынка">
+        <div class="top-row">
+          <div class="pile stock-pile" id="stockPile" data-zone="stock" tabindex="0" role="button" aria-label="Колода"></div>
+          <div class="pile waste-pile" id="wastePile" data-zone="waste" aria-label="Сброс"></div>
+          <div class="top-gap" aria-hidden="true"></div>
+          <div class="pile foundation-pile" id="foundation-S" data-zone="foundation" data-index="S" aria-label="Основание пик"></div>
+          <div class="pile foundation-pile" id="foundation-H" data-zone="foundation" data-index="H" aria-label="Основание червей"></div>
+          <div class="pile foundation-pile" id="foundation-D" data-zone="foundation" data-index="D" aria-label="Основание бубен"></div>
+          <div class="pile foundation-pile" id="foundation-C" data-zone="foundation" data-index="C" aria-label="Основание треф"></div>
+        </div>
+
+        <div class="tableau" id="tableau" aria-label="Игровые столбцы">
+          <div class="pile tableau-pile" data-zone="tableau" data-index="0" aria-label="Столбец 1"></div>
+          <div class="pile tableau-pile" data-zone="tableau" data-index="1" aria-label="Столбец 2"></div>
+          <div class="pile tableau-pile" data-zone="tableau" data-index="2" aria-label="Столбец 3"></div>
+          <div class="pile tableau-pile" data-zone="tableau" data-index="3" aria-label="Столбец 4"></div>
+          <div class="pile tableau-pile" data-zone="tableau" data-index="4" aria-label="Столбец 5"></div>
+          <div class="pile tableau-pile" data-zone="tableau" data-index="5" aria-label="Столбец 6"></div>
+          <div class="pile tableau-pile" data-zone="tableau" data-index="6" aria-label="Столбец 7"></div>
+        </div>
+      </section>
+
+      <footer class="game-footer">
+        <span id="statusText">Разложите все карты по четырём основаниям.</span>
+        <span class="shortcut-hint">N — новая · U — отмена · H — подсказка</span>
+      </footer>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <dialog class="modal theme-modal" id="themeDialog">
+    <form method="dialog" class="modal-card wide">
+      <header class="modal-header">
+        <div><span class="eyebrow">Оформление</span><h2>Выберите мир Косынки</h2></div>
+        <button class="icon-btn" value="cancel" aria-label="Закрыть">×</button>
+      </header>
+      <p class="modal-lead">Каждая тема меняет стол, рубашки, символы мастей, персонажей и анимацию. Правила самой Косынки остаются честными и одинаковыми.</p>
+      <div class="theme-grid" id="themeGrid"></div>
+    </form>
+  </dialog>
+
+  <dialog class="modal" id="rulesDialog">
+    <form method="dialog" class="modal-card">
+      <header class="modal-header">
+        <div><span class="eyebrow">Как играть</span><h2 id="rulesTitle">Правила Косынки</h2></div>
+        <button class="icon-btn" value="cancel" aria-label="Закрыть">×</button>
+      </header>
+      <div id="rulesContent" class="rules-content"></div>
+      <div class="modal-actions"><button class="button primary" value="cancel">Понятно</button></div>
+    </form>
+  </dialog>
+
+  <dialog class="modal" id="installDialog">
+    <form method="dialog" class="modal-card">
+      <header class="modal-header">
+        <div><span class="eyebrow">Без .exe и магазинов</span><h2>Установка приложения</h2></div>
+        <button class="icon-btn" value="cancel" aria-label="Закрыть">×</button>
+      </header>
+      <div class="install-hero"><img src="./assets/icons/icon-192.png" alt="Иконка Косынки"><div><strong>Косынка PWA</strong><span>Работает офлайн после первого открытия</span></div></div>
+      <div class="platform-tabs" role="tablist">
+        <button type="button" class="platform-tab active" data-platform="windows">Windows</button>
+        <button type="button" class="platform-tab" data-platform="macos">macOS</button>
+        <button type="button" class="platform-tab" data-platform="ios">iPhone</button>
+      </div>
+      <div id="platformInstructions" class="platform-instructions"></div>
+      <div class="modal-actions split">
+        <a class="button" href="./downloads/kosynka-pwa.zip" download>Скачать ZIP</a>
+        <button class="button primary" id="nativeInstallBtn" type="button">Установить в браузере</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="modal" id="iosDialog">
+    <form method="dialog" class="modal-card phone-guide">
+      <header class="modal-header">
+        <div><span class="eyebrow">Safari на iPhone</span><h2>Добавить на экран «Домой»</h2></div>
+        <button class="icon-btn" value="cancel" aria-label="Закрыть">×</button>
+      </header>
+      <ol class="ios-steps">
+        <li><span class="step-icon">1</span><div><strong>Откройте сайт в Safari</strong><p>Не во встроенном браузере мессенджера.</p></div></li>
+        <li><span class="step-icon">⇧</span><div><strong>Нажмите «Поделиться»</strong><p>Кнопка-квадрат со стрелкой внизу или сверху экрана.</p></div></li>
+        <li><span class="step-icon">＋</span><div><strong>Выберите «На экран Домой»</strong><p>При необходимости прокрутите список действий.</p></div></li>
+        <li><span class="step-icon">✓</span><div><strong>Нажмите «Добавить»</strong><p>Игра появится как отдельное полноэкранное приложение.</p></div></li>
+      </ol>
+      <div class="modal-actions"><button class="button primary" value="cancel">Готово</button></div>
+    </form>
+  </dialog>
+
+  <dialog class="modal end-modal" id="endDialog">
+    <form method="dialog" class="modal-card center">
+      <div class="end-emblem" id="endEmblem">🏆</div>
+      <h2 id="endTitle">You won</h2>
+      <p id="endText">Отличная партия!</p>
+      <div class="end-stats"><span>Ходы <strong id="endMoves">0</strong></span><span>Время <strong id="endTime">00:00</strong></span></div>
+      <div class="modal-actions center-actions">
+        <button class="button" id="endCloseBtn" value="cancel">Посмотреть стол</button>
+        <button class="button primary" id="endNewBtn" type="button">Новая игра</button>
+      </div>
+    </form>
+  </dialog>
+
+  <noscript>Для игры требуется JavaScript. Все файлы работают локально и не отправляют данные на сторонние сервисы.</noscript>
+  <script src="./app.js" defer></script>
+</body>
+</html>
