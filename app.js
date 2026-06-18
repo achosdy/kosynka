@@ -834,12 +834,10 @@
       if (card.rank >= 11) {
         const court = THEMES[this.themeId].courts[card.rank];
         return `
-          <span class="court-scene">
-            <span class="court-topline">${court.name}</span>
-            <span class="court-medallion">${court.crest}</span>
-            <span class="court-title">${court.title}</span>
-            <span class="court-subtitle">${court.subtitle}</span>
-            <span class="court-suitmark">${glyph}</span>
+          <span class="court-scene court-${this.themeId}">
+            <span class="court-badge">${glyph}</span>
+            <span class="court-figure-frame">${this.courtIllustrationMarkup(card.rank, glyph)}</span>
+            <span class="court-titleplate">${court.name}</span>
           </span>`;
       }
       return this.numberCardMarkup(card.rank, glyph);
@@ -864,6 +862,253 @@
         10: [{ x: 24, y: 16 }, { x: 76, y: 16 }, { x: 50, y: 26 }, { x: 24, y: 38 }, { x: 76, y: 38 }, { x: 24, y: 62, rotate: true }, { x: 76, y: 62, rotate: true }, { x: 50, y: 74, rotate: true }, { x: 24, y: 84, rotate: true }, { x: 76, y: 84, rotate: true }]
       };
       return layouts[rank] || [{ x: 50, y: 50 }];
+    }
+
+    courtIllustrationMarkup(rank, glyph) {
+      const cfg = this.getCourtFigureConfig(rank, glyph);
+      return this.buildFigureSvg(cfg);
+    }
+
+    getCourtFigureConfig(rank, glyph) {
+      const role = rank === 11 ? 'jack' : rank === 12 ? 'queen' : 'king';
+      const presets = {
+        default: { style: 'royal', colors: { primary: '#165b44', secondary: '#f2dec2', accent: '#d7a437', skin: '#f2c8a1', hair: '#3a312b', line: '#173329' }, prop: 'scepter' },
+        dark: { style: 'royal', colors: { primary: '#23273a', secondary: '#a8b0ff', accent: '#88d6ff', skin: '#e3c0a2', hair: '#1a1a1f', line: '#141828' }, prop: 'orb' },
+        light: { style: 'royal', colors: { primary: '#f5efe3', secondary: '#7f69ff', accent: '#f1c96a', skin: '#f0c8a3', hair: '#6d5b49', line: '#7568b3' }, prop: 'staff' },
+        winx: { style: 'fairy', colors: { primary: '#ff71c8', secondary: '#9defff', accent: '#ffe66e', skin: '#f7c6a1', hair: '#5f2cc7', line: '#7d2b9b' }, prop: 'wand' },
+        pokemon: { style: 'trainer', colors: { primary: '#ffdb34', secondary: '#2d77d4', accent: '#ff5e45', skin: '#f4c79f', hair: '#3b2d1f', line: '#29569b' }, prop: 'orb' },
+        minecraft: { style: 'blocky', colors: { primary: '#7bcf53', secondary: '#4b94d6', accent: '#6b4d2a', skin: '#f2c89b', hair: '#573720', line: '#35572c' }, prop: 'pickaxe' },
+        halloween: { style: 'spooky', colors: { primary: '#6d3db7', secondary: '#ff9337', accent: '#f4d88a', skin: '#e6c0a6', hair: '#1d1232', line: '#2a1538' }, prop: 'pumpkin' },
+        christmas: { style: 'festive', colors: { primary: '#d93643', secondary: '#136d4b', accent: '#f4cf66', skin: '#efc7a0', hair: '#6c4d3d', line: '#0f5d41' }, prop: 'gift' },
+        formula1: { style: 'racer', colors: { primary: '#ff2f40', secondary: '#2d2f36', accent: '#f2f2f2', skin: '#efc3a0', hair: '#2f2524', line: '#18191d' }, prop: 'tire' },
+        hellokitty: { style: 'kawaii', colors: { primary: '#ff76b8', secondary: '#ffd7ec', accent: '#ffffff', skin: '#ffe5ee', hair: '#111111', line: '#d1498f' }, prop: 'bow' },
+        pirates: { style: 'pirate', colors: { primary: '#246373', secondary: '#d6a446', accent: '#f4e1b1', skin: '#efc39d', hair: '#5a341f', line: '#17373d' }, prop: 'saber' },
+        chernobyl: { style: 'stalker', colors: { primary: '#5f6d37', secondary: '#d0f145', accent: '#8d8d8d', skin: '#d5b196', hair: '#3a342d', line: '#2c331c' }, prop: 'meter' },
+        mario: { style: 'plumber', colors: { primary: '#ff4e42', secondary: '#1f72cf', accent: '#ffd44f', skin: '#f3c69b', hair: '#5e3422', line: '#6f2e2b' }, prop: 'wrench' }
+      };
+      const cfg = JSON.parse(JSON.stringify(presets[this.themeId] || presets.default));
+      cfg.role = role;
+      cfg.rank = rank;
+      cfg.glyph = glyph;
+      cfg.line = cfg.colors.line;
+      cfg.label = THEMES[this.themeId].courts[rank].name;
+      if (role === 'queen') {
+        cfg.colors.primary = cfg.colors.secondary;
+      }
+      if (role === 'king') {
+        cfg.crown = true;
+        cfg.colors.accent = cfg.colors.accent || '#e3bf58';
+      }
+      return cfg;
+    }
+
+    buildFigureSvg(cfg) {
+      const body = {
+        royal: this.buildRoyalFigure(cfg),
+        fairy: this.buildFairyFigure(cfg),
+        trainer: this.buildTrainerFigure(cfg),
+        blocky: this.buildBlockFigure(cfg),
+        spooky: this.buildSpookyFigure(cfg),
+        festive: this.buildFestiveFigure(cfg),
+        racer: this.buildRacerFigure(cfg),
+        kawaii: this.buildKawaiiFigure(cfg),
+        pirate: this.buildPirateFigure(cfg),
+        stalker: this.buildStalkerFigure(cfg),
+        plumber: this.buildPlumberFigure(cfg)
+      }[cfg.style] || this.buildRoyalFigure(cfg);
+      const { primary, secondary, accent, line } = cfg.colors;
+      return `
+        <svg class="court-svg" viewBox="0 0 220 280" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="bg-${cfg.style}-${cfg.role}" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="${secondary}" stop-opacity="0.42"/>
+              <stop offset="100%" stop-color="#ffffff" stop-opacity="0.02"/>
+            </linearGradient>
+          </defs>
+          <rect x="8" y="8" width="204" height="264" rx="28" fill="url(#bg-${cfg.style}-${cfg.role})" opacity="0.88"/>
+          <circle cx="110" cy="84" r="58" fill="${accent}" opacity="0.18"/>
+          <path d="M44 228 Q110 182 176 228" fill="${primary}" opacity="0.12"/>
+          <g fill="${line}" opacity="0.08">
+            <circle cx="42" cy="44" r="5"/><circle cx="178" cy="44" r="5"/><circle cx="42" cy="236" r="5"/><circle cx="178" cy="236" r="5"/>
+          </g>
+          ${body}
+          <text x="110" y="258" text-anchor="middle" font-size="16" font-weight="800" letter-spacing="1.2" fill="${line}" opacity="0.72">${cfg.label.toUpperCase()}</text>
+        </svg>`;
+    }
+
+    buildRoyalFigure(cfg) {
+      const { primary, secondary, accent, skin, hair, line } = cfg.colors;
+      const crown = cfg.role === 'king' ? `<path d="M72 56 L88 34 L108 56 L128 30 L148 56 L148 70 L72 70 Z" fill="${accent}" stroke="${line}" stroke-width="4"/>` : '';
+      const headWear = cfg.role === 'queen'
+        ? `<path d="M76 58 Q110 34 144 58 L134 74 Q110 62 86 74 Z" fill="${accent}" opacity="0.65"/>`
+        : `<path d="M78 60 Q110 42 142 60" stroke="${accent}" stroke-width="8" stroke-linecap="round"/>`;
+      const prop = cfg.prop === 'orb'
+        ? `<circle cx="164" cy="158" r="16" fill="${accent}" opacity="0.8" stroke="${line}" stroke-width="4"/><line x1="154" y1="174" x2="140" y2="210" stroke="${line}" stroke-width="5"/>`
+        : `<line x1="158" y1="126" x2="164" y2="214" stroke="${accent}" stroke-width="7"/><circle cx="158" cy="120" r="12" fill="${accent}" stroke="${line}" stroke-width="4"/>`;
+      return `
+        ${crown}
+        ${headWear}
+        <circle cx="110" cy="84" r="24" fill="${skin}" stroke="${line}" stroke-width="4"/>
+        <path d="M84 84 Q110 42 136 84" fill="${hair}"/>
+        <path d="M86 110 Q110 94 134 110 L146 190 Q110 220 74 190 Z" fill="${primary}" stroke="${line}" stroke-width="4"/>
+        <path d="M78 142 Q110 126 142 142" stroke="${secondary}" stroke-width="8" stroke-linecap="round" opacity="0.7"/>
+        <path d="M88 190 L82 238 M132 190 L138 238" stroke="${line}" stroke-width="8" stroke-linecap="round"/>
+        <path d="M76 132 L56 176 M144 132 L164 176" stroke="${line}" stroke-width="8" stroke-linecap="round"/>
+        ${prop}`;
+    }
+
+    buildFairyFigure(cfg) {
+      const { primary, secondary, accent, skin, hair, line } = cfg.colors;
+      return `
+        <ellipse cx="66" cy="136" rx="30" ry="48" fill="${secondary}" opacity="0.48" transform="rotate(-20 66 136)"/>
+        <ellipse cx="154" cy="136" rx="30" ry="48" fill="${secondary}" opacity="0.48" transform="rotate(20 154 136)"/>
+        <circle cx="110" cy="84" r="22" fill="${skin}" stroke="${line}" stroke-width="4"/>
+        <path d="M84 80 Q110 34 136 80 Q130 72 110 70 Q92 70 84 80 Z" fill="${hair}"/>
+        <path d="M88 110 Q110 96 132 110 L140 188 Q110 210 80 188 Z" fill="${primary}" stroke="${line}" stroke-width="4"/>
+        <path d="M92 110 L110 150 L128 110" fill="${accent}" opacity="0.55"/>
+        <path d="M86 190 L82 236 M134 190 L138 236" stroke="${line}" stroke-width="7" stroke-linecap="round"/>
+        <path d="M84 128 L56 162 M136 128 L164 162" stroke="${line}" stroke-width="7" stroke-linecap="round"/>
+        <line x1="154" y1="126" x2="182" y2="90" stroke="${accent}" stroke-width="6"/>
+        <circle cx="186" cy="86" r="8" fill="${accent}"/>
+        <circle cx="186" cy="86" r="16" fill="none" stroke="${secondary}" stroke-width="3" opacity="0.5"/>`;
+    }
+
+    buildTrainerFigure(cfg) {
+      const { primary, secondary, accent, skin, hair, line } = cfg.colors;
+      return `
+        <path d="M84 62 H136 L128 82 H92 Z" fill="${primary}" stroke="${line}" stroke-width="4"/>
+        <circle cx="110" cy="88" r="22" fill="${skin}" stroke="${line}" stroke-width="4"/>
+        <path d="M88 86 Q110 52 132 86" fill="${hair}"/>
+        <path d="M82 112 H138 L148 192 Q110 214 72 192 Z" fill="${secondary}" stroke="${line}" stroke-width="4"/>
+        <path d="M82 112 H138 V136 H82 Z" fill="${primary}"/>
+        <path d="M82 136 H138" stroke="#ffffff" stroke-width="7"/>
+        <path d="M86 192 L82 238 M134 192 L138 238" stroke="${line}" stroke-width="8" stroke-linecap="round"/>
+        <path d="M82 130 L54 156 M138 130 L166 156" stroke="${line}" stroke-width="7" stroke-linecap="round"/>
+        <circle cx="168" cy="160" r="18" fill="#ffffff" stroke="${line}" stroke-width="4"/>
+        <path d="M150 160 H186" stroke="${line}" stroke-width="4"/><path d="M168 142 V178" stroke="${line}" stroke-width="4"/><circle cx="168" cy="160" r="8" fill="${accent}"/>`;
+    }
+
+    buildBlockFigure(cfg) {
+      const { primary, secondary, accent, skin, hair, line } = cfg.colors;
+      return `
+        <rect x="88" y="56" width="44" height="44" rx="4" fill="${skin}" stroke="${line}" stroke-width="4"/>
+        <rect x="88" y="56" width="44" height="18" fill="${hair}"/>
+        <rect x="82" y="108" width="56" height="64" rx="4" fill="${primary}" stroke="${line}" stroke-width="4"/>
+        <rect x="82" y="140" width="56" height="16" fill="${secondary}" opacity="0.5"/>
+        <rect x="62" y="118" width="20" height="58" rx="4" fill="${skin}" stroke="${line}" stroke-width="4"/>
+        <rect x="138" y="118" width="20" height="58" rx="4" fill="${skin}" stroke="${line}" stroke-width="4"/>
+        <rect x="86" y="172" width="18" height="54" rx="4" fill="${accent}" stroke="${line}" stroke-width="4"/>
+        <rect x="116" y="172" width="18" height="54" rx="4" fill="${accent}" stroke="${line}" stroke-width="4"/>
+        <path d="M154 126 L182 112 L174 138 L192 146 L164 160 Z" fill="${accent}" stroke="${line}" stroke-width="4"/>`;
+    }
+
+    buildSpookyFigure(cfg) {
+      const { primary, secondary, accent, skin, hair, line } = cfg.colors;
+      if (cfg.role === 'king') {
+        return `
+          <circle cx="110" cy="82" r="22" fill="#f6f2e8" stroke="${line}" stroke-width="4"/>
+          <circle cx="102" cy="80" r="3" fill="${line}"/><circle cx="118" cy="80" r="3" fill="${line}"/>
+          <path d="M90 112 Q110 96 130 112 L144 188 Q110 214 76 188 Z" fill="${primary}" stroke="${line}" stroke-width="4"/>
+          <path d="M78 188 Q110 170 142 188" stroke="${secondary}" stroke-width="6" stroke-dasharray="4 6"/>
+          <path d="M82 132 L54 160 M138 132 L166 160" stroke="${line}" stroke-width="7" stroke-linecap="round"/>
+          <path d="M88 188 L84 236 M132 188 L136 236" stroke="${line}" stroke-width="7" stroke-linecap="round"/>
+          <circle cx="164" cy="146" r="16" fill="${accent}" stroke="${line}" stroke-width="4"/><path d="M156 146 H172 M164 138 V154" stroke="${line}" stroke-width="3"/>`;
+      }
+      return `
+        <path d="M76 60 Q110 36 144 60 Q138 78 110 78 Q82 78 76 60 Z" fill="${hair}"/>
+        <circle cx="110" cy="86" r="22" fill="${skin}" stroke="${line}" stroke-width="4"/>
+        <path d="M84 112 Q110 92 136 112 L144 188 Q110 212 76 188 Z" fill="${primary}" stroke="${line}" stroke-width="4"/>
+        <path d="M78 120 Q110 140 142 120" stroke="${secondary}" stroke-width="7" opacity="0.7"/>
+        <path d="M84 132 L58 166 M136 132 L162 166" stroke="${line}" stroke-width="7" stroke-linecap="round"/>
+        <path d="M88 188 L82 236 M132 188 L138 236" stroke="${line}" stroke-width="7" stroke-linecap="round"/>
+        <circle cx="168" cy="162" r="18" fill="${accent}" stroke="${line}" stroke-width="4"/>
+        <path d="M156 170 Q168 146 180 170" fill="${line}" opacity="0.55"/>`;
+    }
+
+    buildFestiveFigure(cfg) {
+      const { primary, secondary, accent, skin, hair, line } = cfg.colors;
+      const beard = cfg.role === 'king' ? `<path d="M90 96 Q110 128 130 96 Q132 128 110 142 Q88 128 90 96 Z" fill="#ffffff" stroke="${line}" stroke-width="3"/>` : '';
+      return `
+        <path d="M76 60 H144 L132 78 H88 Z" fill="${primary}" stroke="${line}" stroke-width="4"/>
+        <circle cx="110" cy="86" r="22" fill="${skin}" stroke="${line}" stroke-width="4"/>
+        ${beard}
+        <path d="M84 112 Q110 94 136 112 L144 190 Q110 214 76 190 Z" fill="${primary}" stroke="${line}" stroke-width="4"/>
+        <path d="M90 124 H130" stroke="#ffffff" stroke-width="8" stroke-linecap="round"/>
+        <path d="M84 132 L56 160 M136 132 L164 160" stroke="${line}" stroke-width="7" stroke-linecap="round"/>
+        <path d="M90 190 L84 236 M130 190 L136 236" stroke="${line}" stroke-width="7" stroke-linecap="round"/>
+        <rect x="152" y="150" width="30" height="26" rx="4" fill="${accent}" stroke="${line}" stroke-width="4"/>
+        <path d="M167 150 V176 M152 163 H182" stroke="${primary}" stroke-width="4"/><path d="M160 148 Q167 138 174 148" stroke="${primary}" stroke-width="4" fill="none"/>`;
+    }
+
+    buildRacerFigure(cfg) {
+      const { primary, secondary, accent, skin, hair, line } = cfg.colors;
+      return `
+        <circle cx="110" cy="86" r="24" fill="${secondary}" stroke="${line}" stroke-width="4"/>
+        <path d="M94 82 H126" stroke="#ffffff" stroke-width="10" stroke-linecap="round"/>
+        <path d="M82 112 Q110 96 138 112 L146 190 Q110 212 74 190 Z" fill="${primary}" stroke="${line}" stroke-width="4"/>
+        <path d="M82 132 H138" stroke="#ffffff" stroke-width="7"/>
+        <path d="M82 132 L56 160 M138 132 L164 160" stroke="${line}" stroke-width="7" stroke-linecap="round"/>
+        <path d="M90 190 L84 236 M130 190 L136 236" stroke="${line}" stroke-width="7" stroke-linecap="round"/>
+        <circle cx="168" cy="166" r="18" fill="#1d1f25" stroke="${line}" stroke-width="4"/>
+        <circle cx="168" cy="166" r="8" fill="${accent}"/>`;
+    }
+
+    buildKawaiiFigure(cfg) {
+      const { primary, secondary, accent, skin, hair, line } = cfg.colors;
+      return `
+        <circle cx="110" cy="88" r="30" fill="#fffafc" stroke="${line}" stroke-width="4"/>
+        <path d="M84 66 L98 42 L108 66 Z M112 66 L122 42 L136 66 Z" fill="#fffafc" stroke="${line}" stroke-width="4" stroke-linejoin="round"/>
+        <circle cx="99" cy="88" r="3" fill="${line}"/><circle cx="121" cy="88" r="3" fill="${line}"/>
+        <ellipse cx="110" cy="98" rx="4" ry="3" fill="#f2c34b"/>
+        <path d="M90 84 H80 M140 84 H130 M90 100 H80 M140 100 H130" stroke="${line}" stroke-width="3" stroke-linecap="round"/>
+        <path d="M120 54 Q136 40 150 54 Q142 72 124 68 Z" fill="${primary}" stroke="${line}" stroke-width="4"/>
+        <path d="M86 122 Q110 108 134 122 L142 190 Q110 212 78 190 Z" fill="${primary}" stroke="${line}" stroke-width="4"/>
+        <path d="M84 132 L60 160 M136 132 L160 160" stroke="${line}" stroke-width="7" stroke-linecap="round"/>
+        <path d="M92 190 L86 236 M128 190 L134 236" stroke="${line}" stroke-width="7" stroke-linecap="round"/>
+        <circle cx="110" cy="144" r="10" fill="${accent}" opacity="0.75"/>`;
+    }
+
+    buildPirateFigure(cfg) {
+      const { primary, secondary, accent, skin, hair, line } = cfg.colors;
+      const hat = `<path d="M70 62 Q110 28 150 62 L140 82 H80 Z" fill="#151515" stroke="${line}" stroke-width="4"/><path d="M66 82 H154" stroke="${secondary}" stroke-width="6" stroke-linecap="round"/>`;
+      const eye = cfg.role === 'jack' ? `<rect x="94" y="82" width="18" height="10" fill="#151515" rx="4"/>` : '';
+      return `
+        ${hat}
+        <circle cx="110" cy="88" r="22" fill="${skin}" stroke="${line}" stroke-width="4"/>
+        ${eye}
+        <path d="M84 112 Q110 96 136 112 L144 190 Q110 214 76 190 Z" fill="${primary}" stroke="${line}" stroke-width="4"/>
+        <path d="M90 126 Q110 118 130 126" stroke="${secondary}" stroke-width="8" stroke-linecap="round"/>
+        <path d="M84 132 L58 160" stroke="${line}" stroke-width="7" stroke-linecap="round"/>
+        <path d="M136 132 L156 156" stroke="${line}" stroke-width="7" stroke-linecap="round"/>
+        <path d="M90 190 L84 236 M130 190 L136 236" stroke="${line}" stroke-width="7" stroke-linecap="round"/>
+        <path d="M156 166 L184 142" stroke="${accent}" stroke-width="5" stroke-linecap="round"/><path d="M182 140 L190 152 L174 156 Z" fill="${accent}"/>`;
+    }
+
+    buildStalkerFigure(cfg) {
+      const { primary, secondary, accent, skin, hair, line } = cfg.colors;
+      return `
+        <path d="M80 58 Q110 38 140 58 L134 78 Q110 70 86 78 Z" fill="${primary}" stroke="${line}" stroke-width="4"/>
+        <circle cx="110" cy="88" r="22" fill="${skin}" stroke="${line}" stroke-width="4"/>
+        <circle cx="102" cy="88" r="4" fill="${line}"/><circle cx="118" cy="88" r="4" fill="${line}"/>
+        <path d="M84 112 Q110 96 136 112 L146 192 Q110 216 74 192 Z" fill="${primary}" stroke="${line}" stroke-width="4"/>
+        <rect x="92" y="132" width="36" height="18" rx="4" fill="${secondary}" opacity="0.6"/>
+        <path d="M84 132 L58 160 M136 132 L162 160" stroke="${line}" stroke-width="7" stroke-linecap="round"/>
+        <path d="M92 192 L86 236 M128 192 L134 236" stroke="${line}" stroke-width="7" stroke-linecap="round"/>
+        <rect x="154" y="150" width="24" height="34" rx="4" fill="#2d3125" stroke="${line}" stroke-width="4"/><path d="M166 150 V184" stroke="${secondary}" stroke-width="4"/><circle cx="166" cy="166" r="4" fill="${accent}"/>`;
+    }
+
+    buildPlumberFigure(cfg) {
+      const { primary, secondary, accent, skin, hair, line } = cfg.colors;
+      return `
+        <path d="M80 60 H140 L134 78 H86 Z" fill="${primary}" stroke="${line}" stroke-width="4"/>
+        <circle cx="110" cy="88" r="22" fill="${skin}" stroke="${line}" stroke-width="4"/>
+        <path d="M96 98 Q110 112 124 98" stroke="${hair}" stroke-width="5" stroke-linecap="round"/>
+        <path d="M84 112 Q110 96 136 112 L146 192 Q110 214 74 192 Z" fill="${secondary}" stroke="${line}" stroke-width="4"/>
+        <rect x="94" y="124" width="32" height="58" rx="6" fill="${primary}" stroke="${line}" stroke-width="4"/>
+        <path d="M84 132 L58 158 M136 132 L162 158" stroke="${line}" stroke-width="7" stroke-linecap="round"/>
+        <path d="M92 192 L86 236 M128 192 L134 236" stroke="${line}" stroke-width="7" stroke-linecap="round"/>
+        <path d="M154 164 C164 144 180 144 188 156 C180 168 164 172 154 164 Z" fill="${accent}" stroke="${line}" stroke-width="4"/>
+        <circle cx="154" cy="164" r="3" fill="${line}"/>`;
     }
 
     rankLabel(rank) {
