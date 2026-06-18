@@ -931,3 +931,61 @@ body[data-theme="mario"] .theme-backdrop::after { background-image:
   .board { width: calc(100vw - 14px - var(--safe-left) - var(--safe-right)); }
   .court-titleplate { font-size: calc(var(--card-w) * .072); }
 }
+
+/* Extra themed motifs so each theme is immediately recognizable */
+.board { position: relative; overflow: hidden; }
+.board::before,
+.board::after {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  opacity: .16;
+  filter: drop-shadow(0 8px 14px rgba(0,0,0,.18));
+}
+.top-row, .tableau { position: relative; z-index: 1; }
+
+body[data-theme="winx"] .board::before { content: "✦ ✧ ❀"; right: 2.5%; top: 5%; font-size: clamp(28px, 4vw, 56px); color: #fff3fb; letter-spacing: .22em; transform: rotate(-6deg); }
+body[data-theme="winx"] .board::after { content: "🪽"; left: 3%; bottom: 7%; font-size: clamp(62px, 9vw, 132px); color: #ffe1fb; opacity: .12; }
+
+body[data-theme="pokemon"] .board::before { content: "⚡"; right: 4%; top: 7%; font-size: clamp(84px, 10vw, 154px); color: #fff1a8; opacity: .18; }
+body[data-theme="pokemon"] .board::after { content: "◉"; left: 3%; bottom: 8%; font-size: clamp(72px, 8vw, 118px); color: #fff; opacity: .12; }
+
+body[data-theme="minecraft"] .board::before { content: "■ ■ ■"; right: 2%; top: 6%; font-size: clamp(26px, 3vw, 42px); color: #dbf6bd; letter-spacing: .18em; }
+body[data-theme="minecraft"] .board::after { content: "⛏"; left: 3%; bottom: 8%; font-size: clamp(72px, 8vw, 122px); color: #d7f5a1; opacity: .10; }
+
+body[data-theme="halloween"] .board::before { content: "🎃"; right: 4%; top: 7%; font-size: clamp(72px, 8vw, 126px); color: #ffd3a1; opacity: .16; }
+body[data-theme="halloween"] .board::after { content: "🕸"; left: 2%; bottom: 5%; font-size: clamp(70px, 10vw, 150px); color: #fff; opacity: .09; }
+
+body[data-theme="christmas"] .board::before { content: "🎄"; right: 4%; top: 6%; font-size: clamp(66px, 8vw, 118px); color: #fff; opacity: .14; }
+body[data-theme="christmas"] .board::after { content: "❄ ❄ ❄"; left: 3%; bottom: 8%; font-size: clamp(30px, 4vw, 52px); color: #fff; letter-spacing: .25em; opacity: .14; }
+
+body[data-theme="formula1"] .board::before { content: "🏁"; right: 3%; top: 8%; font-size: clamp(72px, 9vw, 132px); color: #fff; opacity: .13; }
+body[data-theme="formula1"] .board::after { content: "◎"; left: 2%; bottom: 8%; font-size: clamp(74px, 8vw, 124px); color: #fff; opacity: .10; }
+
+body[data-theme="hellokitty"] .board::before { content: "🎀"; right: 4%; top: 8%; font-size: clamp(70px, 8vw, 126px); color: #fff; opacity: .14; }
+body[data-theme="hellokitty"] .board::after { content: "❀ ✿ ♥"; left: 3%; bottom: 8%; font-size: clamp(28px, 4vw, 50px); color: #fff; letter-spacing: .2em; opacity: .14; }
+
+body[data-theme="pirates"] .board::before { content: "⚓"; right: 3%; top: 8%; font-size: clamp(76px, 9vw, 138px); color: #ffe2b1; opacity: .16; }
+body[data-theme="pirates"] .board::after { content: "☠"; left: 3%; bottom: 8%; font-size: clamp(70px, 8vw, 128px); color: #fff; opacity: .11; }
+
+body[data-theme="chernobyl"] .board::before { content: "☢"; right: 3%; top: 7%; font-size: clamp(82px, 9vw, 148px); color: #efff87; opacity: .16; }
+body[data-theme="chernobyl"] .board::after { content: "⚠"; left: 3%; bottom: 8%; font-size: clamp(70px, 8vw, 128px); color: #fff4a6; opacity: .10; }
+
+body[data-theme="mario"] .board::before { content: "★"; right: 4%; top: 7%; font-size: clamp(82px, 10vw, 154px); color: #fff0a5; opacity: .16; }
+body[data-theme="mario"] .board::after { content: "🧱"; left: 3%; bottom: 8%; font-size: clamp(74px, 8vw, 132px); color: #fff; opacity: .12; }
+
+/* Theme-specific card backs */
+body[data-theme="winx"] .card.face-down::before { background-image: radial-gradient(circle, rgba(255,255,255,.22) 0 14%, transparent 15%), linear-gradient(45deg, transparent 42%, rgba(255,255,255,.28) 43% 57%, transparent 58%), linear-gradient(-45deg, transparent 42%, rgba(255,255,255,.20) 43% 57%, transparent 58%); }
+body[data-theme="pokemon"] .card.face-down::before { background-image: linear-gradient(180deg, rgba(255,255,255,.05) 0 48%, rgba(0,0,0,.22) 49% 51%, rgba(255,255,255,.05) 52%), radial-gradient(circle, rgba(255,255,255,.18) 0 14%, transparent 15%); }
+body[data-theme="minecraft"] .card.face-down::before { background-image: repeating-linear-gradient(90deg, rgba(255,255,255,.16) 0 10px, transparent 10px 20px), repeating-linear-gradient(0deg, rgba(255,255,255,.12) 0 10px, transparent 10px 20px); background-size: auto; }
+body[data-theme="halloween"] .card.face-down::before { background-image: radial-gradient(circle at 50% 50%, rgba(255,161,80,.18) 0 14%, transparent 15%), linear-gradient(45deg, transparent 42%, rgba(255,255,255,.18) 43% 57%, transparent 58%); }
+body[data-theme="christmas"] .card.face-down::before { background-image: radial-gradient(circle at 50% 50%, rgba(255,255,255,.22) 0 12%, transparent 13%), linear-gradient(45deg, transparent 42%, rgba(255,255,255,.18) 43% 57%, transparent 58%); }
+body[data-theme="formula1"] .card.face-down::before { background-image: repeating-linear-gradient(90deg, rgba(255,255,255,.24) 0 7px, transparent 7px 14px), linear-gradient(45deg, transparent 42%, rgba(255,255,255,.18) 43% 57%, transparent 58%); }
+body[data-theme="hellokitty"] .card.face-down::before { background-image: radial-gradient(circle, rgba(255,255,255,.22) 0 14%, transparent 15%), radial-gradient(circle at 24% 30%, rgba(255,255,255,.16) 0 9%, transparent 10%), linear-gradient(45deg, transparent 42%, rgba(255,255,255,.16) 43% 57%, transparent 58%); }
+body[data-theme="pirates"] .card.face-down::before { background-image: linear-gradient(45deg, transparent 42%, rgba(255,222,164,.22) 43% 57%, transparent 58%), repeating-linear-gradient(90deg, rgba(255,255,255,.08) 0 14px, transparent 14px 28px); }
+body[data-theme="chernobyl"] .card.face-down::before { background-image: repeating-linear-gradient(45deg, rgba(239,255,135,.14) 0 10px, transparent 10px 20px), linear-gradient(-45deg, transparent 42%, rgba(255,255,255,.14) 43% 57%, transparent 58%); }
+body[data-theme="mario"] .card.face-down::before { background-image: radial-gradient(circle, rgba(255,255,255,.22) 0 14%, transparent 15%), repeating-linear-gradient(90deg, rgba(255,255,255,.10) 0 14px, transparent 14px 28px); }
+
+@media (max-width:760px) {
+  .board::before, .board::after { opacity: .09; }
+}
