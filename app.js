@@ -15,71 +15,144 @@
       title: 'Дефолтная', caption: 'Классический зелёный стол', thumb: null,
       accent: '#42d392', meta: '#075c3c', backIcon: '♠', particles: ['♠', '♥', '♦', '♣'],
       suits: { S: '♠', H: '♥', D: '♦', C: '♣' },
-      courts: { 11: ['♞', 'Валет'], 12: ['♛', 'Дама'], 13: ['♚', 'Король'] },
-      banner: '♠', story: 'Классическая Косынка без лишних эффектов: зелёное сукно, знакомые масти и строгие карты.'
+      courts: {
+        11: { crest: 'J', name: 'Валет', title: 'Валет', subtitle: 'классическая колода' },
+        12: { crest: 'Q', name: 'Дама', title: 'Дама', subtitle: 'классическая колода' },
+        13: { crest: 'K', name: 'Король', title: 'Король', subtitle: 'классическая колода' }
+      },
+      banner: '♠', story: 'Классическая Косынка в духе настольного сукна: строгие масти, чистые карты и спокойная анимация.'
+    },
+    dark: {
+      title: 'Темная', caption: 'Элегантный нуар и графит', thumb: null,
+      accent: '#9da6ff', meta: '#11131a', backIcon: '◆', particles: ['◆', '✦', '✧', '◈'],
+      suits: { S: '♠', H: '♥', D: '♦', C: '♣' },
+      courts: {
+        11: { crest: 'N', name: 'Вестник', title: 'Noir Jack', subtitle: 'вестник ночи' },
+        12: { crest: 'L', name: 'Леди ночи', title: 'Night Queen', subtitle: 'полуночный блеск' },
+        13: { crest: 'K', name: 'Тёмный король', title: 'Obsidian King', subtitle: 'власть сумерек' }
+      },
+      banner: '◆', story: 'Нуарная версия Косынки: графитовый стол, холодные отблески и благородный контраст чёрного стекла.'
+    },
+    light: {
+      title: 'Светлая', caption: 'Слоновая кость, воздух и золото', thumb: null,
+      accent: '#7e6bff', meta: '#f5efe1', backIcon: '◇', particles: ['◇', '✦', '✧', '❂'],
+      suits: { S: '♠', H: '♥', D: '♦', C: '♣' },
+      courts: {
+        11: { crest: 'A', name: 'Посланник', title: 'Aurora Jack', subtitle: 'утренний свет' },
+        12: { crest: 'D', name: 'Леди рассвета', title: 'Dawn Queen', subtitle: 'золотой горизонт' },
+        13: { crest: 'S', name: 'Король света', title: 'Sun King', subtitle: 'чистое сияние' }
+      },
+      banner: '◇', story: 'Светлая тема строится на мягких кремовых тонах, чистом воздухе и ощущении дорогой бумажной колоды.'
     },
     winx: {
-      title: 'Winx', caption: 'Магия, блёстки и крылья', thumb: './assets/thumbs/winx.webp',
-      accent: '#ff7ee8', meta: '#7d2b9b', backIcon: '🪽', particles: ['✨', '💫', '🪽', '💖'],
-      suits: { S: '🌙', H: '💖', D: '✨', C: '🪽' },
-      courts: { 11: ['🧚', 'Фея воздуха'], 12: ['🧚‍♀️', 'Фея света'], 13: ['🪄', 'Хранитель'] },
-      banner: '🧚‍♀️', story: 'Собирайте магические школы по своим символам. Дамы превращены в фей, а стол мерцает волшебной пыльцой.'
+      title: 'Winx', caption: 'Магия, блёстки и крылья', thumb: null,
+      accent: '#ff7ee8', meta: '#7d2b9b', backIcon: '✦', particles: ['✦', '✧', '❈', '❀'],
+      suits: { S: '☽', H: '♥', D: '✦', C: '❈' },
+      courts: {
+        11: { crest: '✦', name: 'Хранитель крыла', title: 'Sky Ward', subtitle: 'магический дозор' },
+        12: { crest: '❈', name: 'Фея света', title: 'Fairy Queen', subtitle: 'искры и глянец' },
+        13: { crest: '✶', name: 'Верховный хранитель', title: 'Magic King', subtitle: 'кристальная мантия' }
+      },
+      banner: '✦', story: 'Яркая сказочная тема с магическим сиянием, полупрозрачными орнаментами и изящными карточными рамками.'
     },
     pokemon: {
-      title: 'Pokémon', caption: 'Жёлтая энергия и стихии', thumb: './assets/thumbs/pokemon.webp',
-      accent: '#ffd835', meta: '#1c78bc', backIcon: '⚡', particles: ['⚡', '⭐', '🔴', '✨'],
-      suits: { S: '⚡', H: '🔥', D: '💧', C: '🌿' },
-      courts: { 11: ['🧢', 'Тренер'], 12: ['⚡', 'Электро'], 13: ['🐉', 'Чемпион'] },
-      banner: '⚡', story: 'Четыре масти стали стихиями. Соберите каждую стихию от туза до короля и доведите команду до победы.'
+      title: 'Pokémon', caption: 'Жёлтая энергия и стихии', thumb: null,
+      accent: '#ffd835', meta: '#1c78bc', backIcon: '⚡', particles: ['⚡', '✦', '◉', '✶'],
+      suits: { S: '⚡', H: '✹', D: '◉', C: '✿' },
+      courts: {
+        11: { crest: '⚡', name: 'Тренер', title: 'Field Trainer', subtitle: 'карманная лига' },
+        12: { crest: '◉', name: 'Лидер арены', title: 'Gym Master', subtitle: 'силы стихий' },
+        13: { crest: '★', name: 'Чемпион', title: 'League Champ', subtitle: 'решающий бой' }
+      },
+      banner: '⚡', story: 'Энергичная тема в духе карточной тренерской лиги: электрические акценты, яркие значки и дух приключения.'
     },
     minecraft: {
-      title: 'Minecraft', caption: 'Пиксели, блоки и мобы', thumb: './assets/thumbs/minecraft.webp',
-      accent: '#80d757', meta: '#456d32', backIcon: '⛏️', particles: ['🟩', '🟫', '⬛', '💎'],
-      suits: { S: '⛏️', H: '❤️', D: '💎', C: '🧱' },
-      courts: { 11: ['🧟', 'Моб'], 12: ['🧙', 'Житель'], 13: ['👑', 'Стив'] },
-      banner: '⛏️', story: 'Карты выглядят как блоки, а масти — как ресурсы. Стройте цепочки сверху вниз, будто складываете инвентарь.'
+      title: 'Minecraft', caption: 'Пиксели, блоки и мобы', thumb: null,
+      accent: '#80d757', meta: '#456d32', backIcon: '▣', particles: ['■', '▣', '◆', '✦'],
+      suits: { S: '⛏', H: '♥', D: '◆', C: '▣' },
+      courts: {
+        11: { crest: '⛏', name: 'Шахтёр', title: 'Mine Jack', subtitle: 'добыча ресурсов' },
+        12: { crest: '◆', name: 'Мастер крафта', title: 'Craft Queen', subtitle: 'верстак и зелья' },
+        13: { crest: '▣', name: 'Хранитель мира', title: 'Block King', subtitle: 'строитель биомов' }
+      },
+      banner: '▣', story: 'Квадратная тема с пиксельной пластикой, блоками, рудой и ощущением большого процедурного мира.'
     },
     halloween: {
-      title: 'Halloween', caption: 'Тыквы, туман и ночные существа', thumb: './assets/thumbs/halloween.webp',
-      accent: '#ff8d2d', meta: '#21102f', backIcon: '🎃', particles: ['🦇', '🎃', '🕸️', '👻'],
-      suits: { S: '🕷️', H: '🫀', D: '🧠', C: '🦇' },
-      courts: { 11: ['🧛', 'Вампир'], 12: ['🧙‍♀️', 'Ведьма'], 13: ['💀', 'Скелет'] },
-      banner: '🎃', story: 'Пики стали пауками, трефы — летучими мышами, черви — кровавыми сердцами, а бубны — мозгами.'
+      title: 'Halloween', caption: 'Туман, тыквы и ночные страхи', thumb: null,
+      accent: '#ff8d2d', meta: '#21102f', backIcon: '☾', particles: ['☾', '✢', '✶', '✷'],
+      suits: { S: '✢', H: '♥', D: '♦', C: '☾' },
+      courts: {
+        11: { crest: '✢', name: 'Охотник', title: 'Hunter Jack', subtitle: 'шёпот кладбища' },
+        12: { crest: '☾', name: 'Ведьма', title: 'Witch Queen', subtitle: 'лунное зелье' },
+        13: { crest: '✶', name: 'Властелин тьмы', title: 'Night King', subtitle: 'король тыкв' }
+      },
+      banner: '☾', story: 'Пугающая, но стильная тема: фиолетовое небо, резные тыквы, кривые ветви и карточный готический декор.'
     },
     christmas: {
-      title: 'Christmas', caption: 'Снег, золото и подарки', thumb: './assets/thumbs/christmas.webp',
-      accent: '#e43a43', meta: '#0b6847', backIcon: '🎁', particles: ['❄️', '✨', '⭐', '🎄'],
-      suits: { S: '🎄', H: '🎁', D: '🔔', C: '❄️' },
-      courts: { 11: ['🦌', 'Олень'], 12: ['🤶', 'Миссис Клаус'], 13: ['🎅', 'Санта'] },
-      banner: '🎄', story: 'Соберите четыре праздничные гирлянды: ёлки, подарки, колокольчики и снежинки. Король здесь — Санта.'
+      title: 'Christmas', caption: 'Праздник, золото и снежный свет', thumb: null,
+      accent: '#e43a43', meta: '#0b6847', backIcon: '❄', particles: ['❄', '✦', '✶', '✧'],
+      suits: { S: '❄', H: '♥', D: '✶', C: '❋' },
+      courts: {
+        11: { crest: '❄', name: 'Оленевод', title: 'Reindeer Jack', subtitle: 'северный караван' },
+        12: { crest: '✶', name: 'Госпожа зимы', title: 'Winter Queen', subtitle: 'ледяное кружево' },
+        13: { crest: '✦', name: 'Санта', title: 'Santa King', subtitle: 'подарки и гирлянды' }
+      },
+      banner: '❄', story: 'Золотисто-снежная тема с гирляндами, свечением витрин и ощущением тёплого рождественского вечера.'
     },
     formula1: {
-      title: 'Formula 1', caption: 'Скорость, трассы и пит-стопы', thumb: './assets/thumbs/formula1.webp',
-      accent: '#ff2738', meta: '#161719', backIcon: '🏁', particles: ['🏁', '🛞', '⚡', '💨'],
-      suits: { S: '🏁', H: '🏎️', D: '🏆', C: '🛞' },
-      courts: { 11: ['🛞', 'Механик'], 12: ['🏎️', 'Пилот'], 13: ['🏆', 'Чемпион'] },
-      banner: '🏎️', story: 'Четыре масти — флаг, болид, кубок и шина. Раскладывайте карты точно, как команда проводит быстрый пит-стоп.'
+      title: 'Formula 1', caption: 'Скорость, трассы и пит-стопы', thumb: null,
+      accent: '#ff2738', meta: '#161719', backIcon: '▤', particles: ['▤', '✶', '◈', '⟐'],
+      suits: { S: '▤', H: '♥', D: '◈', C: '◎' },
+      courts: {
+        11: { crest: '▤', name: 'Механик', title: 'Pit Jack', subtitle: 'быстрый пит-стоп' },
+        12: { crest: '◈', name: 'Пилот', title: 'Pole Queen', subtitle: 'гоночный болид' },
+        13: { crest: '◎', name: 'Чемпион', title: 'Grand King', subtitle: 'клетчатый флаг' }
+      },
+      banner: '▤', story: 'Гоночная тема с клетчатыми мотивами, резкими полосами, трассовой графикой и ощущением максимальной скорости.'
     },
     hellokitty: {
-      title: 'Hello Kitty', caption: 'Розовые бантики и милые герои', thumb: './assets/thumbs/hellokitty.webp',
-      accent: '#ff75b6', meta: '#e54c94', backIcon: '🎀', particles: ['🎀', '💗', '🌸', '✨'],
-      suits: { S: '🎀', H: '💗', D: '🌸', C: '🐾' },
-      courts: { 11: ['🐾', 'Друг'], 12: ['🐱', 'Китти'], 13: ['👑', 'Король милоты'] },
-      banner: '🎀', story: 'Нежная розовая тема с бантиками, лапками и сердцами. Правила те же, но каждая победа выглядит особенно мило.'
+      title: 'Hello Kitty', caption: 'Нежный розовый мир и банты', thumb: null,
+      accent: '#ff75b6', meta: '#e54c94', backIcon: '❀', particles: ['❀', '♥', '✦', '✿'],
+      suits: { S: '❀', H: '♥', D: '✿', C: '◆' },
+      courts: {
+        11: { crest: '❀', name: 'Друг', title: 'Sweet Friend', subtitle: 'ласковый характер' },
+        12: { crest: '♥', name: 'Китти', title: 'Kitty Queen', subtitle: 'милый бантик' },
+        13: { crest: '✦', name: 'Король милоты', title: 'Cute King', subtitle: 'розовое сердце' }
+      },
+      banner: '❀', story: 'Милая тема в розово-жемчужной палитре: бантики, лепестки, мягкие облака и ласковый блеск поверхностей.'
     },
     pirates: {
-      title: 'Pirates', caption: 'Море, корабли и сокровища', thumb: './assets/thumbs/pirates.webp',
-      accent: '#d6a446', meta: '#184e5a', backIcon: '🏴‍☠️', particles: ['🫧', '⚓', '🪙', '🌊'],
-      suits: { S: '⚓', H: '🍹', D: '💎', C: '☠️' },
-      courts: { 11: ['🗡️', 'Матрос'], 12: ['🧭', 'Штурман'], 13: ['🏴‍☠️', 'Капитан'] },
-      banner: '🏴‍☠️', story: 'Основания превратились в сундуки сокровищ. Соберите якоря, ром, драгоценности и пиратские знаки.'
+      title: 'Pirates', caption: 'Штормовое море и сокровища', thumb: null,
+      accent: '#d6a446', meta: '#184e5a', backIcon: '⚓', particles: ['⚓', '✶', '◈', '✦'],
+      suits: { S: '⚓', H: '♥', D: '◈', C: '✶' },
+      courts: {
+        11: { crest: '⚓', name: 'Штурман', title: 'Deck Jack', subtitle: 'соль и ветер' },
+        12: { crest: '◈', name: 'Квартирмейстер', title: 'Sea Queen', subtitle: 'карта рифов' },
+        13: { crest: '✶', name: 'Капитан', title: 'Captain King', subtitle: 'сундук и сабля' }
+      },
+      banner: '⚓', story: 'Пиратская тема соединяет корабельное дерево, компасы, морскую пену и золотой отблеск сундуков.'
     },
     chernobyl: {
-      title: 'Чернобыль', caption: 'Радиация, тишина и руины', thumb: './assets/thumbs/chernobyl.webp',
-      accent: '#c9f31d', meta: '#354323', backIcon: '☢️', particles: ['☢️', '⚠️', '·', '✦'],
-      suits: { S: '☢️', H: '🧬', D: '⚠️', C: '🧪' },
-      courts: { 11: ['🐺', 'Сталкер'], 12: ['🧬', 'Мутация'], 13: ['☢️', 'Реактор'] },
-      banner: '☢️', story: 'Мрачная зона отчуждения: знаки радиации, мутации, предупреждения и лабораторные колбы. Никаких внешних загрузок.'
+      title: 'Чернобыль', caption: 'Туман, радиация и руины', thumb: null,
+      accent: '#c9f31d', meta: '#354323', backIcon: '☢', particles: ['☢', '⚠', '✢', '·'],
+      suits: { S: '☢', H: '♥', D: '⚠', C: '✢' },
+      courts: {
+        11: { crest: '⚠', name: 'Сталкер', title: 'Zone Jack', subtitle: 'пустые улицы' },
+        12: { crest: '✢', name: 'Инженер', title: 'Core Queen', subtitle: 'тени реактора' },
+        13: { crest: '☢', name: 'Реактор', title: 'Reactor King', subtitle: 'зона отчуждения' }
+      },
+      banner: '☢', story: 'Мрачная постиндустриальная тема с серым небом, жёлто-зелёными акцентами и ощущением заброшенной зоны.'
+    },
+    mario: {
+      title: 'Mario', caption: 'Платформер, кирпичики и облака', thumb: null,
+      accent: '#ff4e42', meta: '#53a9ff', backIcon: '★', particles: ['★', '■', '◉', '✦'],
+      suits: { S: '★', H: '♥', D: '◉', C: '■' },
+      courts: {
+        11: { crest: '■', name: 'Исследователь', title: 'Level Jack', subtitle: 'кирпичные блоки' },
+        12: { crest: '♥', name: 'Принцесса', title: 'Castle Queen', subtitle: 'королевский замок' },
+        13: { crest: '★', name: 'Герой платформ', title: 'Hero King', subtitle: 'монеты и трубы' }
+      },
+      banner: '★', story: 'Весёлая платформенная тема с небом, холмами, облаками, кирпичными блоками и энергией ретро-приключения.'
     }
   };
 
@@ -750,12 +823,47 @@
     }
 
     cardCenterMarkup(card, glyph) {
-      if (card.rank === 1) return `<span class="ace">${glyph}</span>`;
-      if (card.rank >= 11) {
-        const [icon, name] = THEMES[this.themeId].courts[card.rank];
-        return `<span class="court-frame"><span class="court-icon">${icon}</span><span class="court-name">${name}</span></span>`;
+      if (card.rank === 1) {
+        return `
+          <span class="ace-scene">
+            <span class="ace-ring"></span>
+            <span class="ace-glyph">${glyph}</span>
+            <span class="ace-ribbon">ACE</span>
+          </span>`;
       }
-      return `<span class="number-glyph">${glyph}</span><span class="count">${card.rank}</span>`;
+      if (card.rank >= 11) {
+        const court = THEMES[this.themeId].courts[card.rank];
+        return `
+          <span class="court-scene">
+            <span class="court-topline">${court.name}</span>
+            <span class="court-medallion">${court.crest}</span>
+            <span class="court-title">${court.title}</span>
+            <span class="court-subtitle">${court.subtitle}</span>
+            <span class="court-suitmark">${glyph}</span>
+          </span>`;
+      }
+      return this.numberCardMarkup(card.rank, glyph);
+    }
+
+    numberCardMarkup(rank, glyph) {
+      const pips = this.getPipLayout(rank).map(pip => `
+        <span class="pip ${pip.rotate ? 'flip' : ''}" style="left:${pip.x}%; top:${pip.y}%">${glyph}</span>`).join('');
+      return `<span class="pip-layout">${pips}</span>`;
+    }
+
+    getPipLayout(rank) {
+      const layouts = {
+        2: [{ x: 50, y: 18 }, { x: 50, y: 82, rotate: true }],
+        3: [{ x: 50, y: 16 }, { x: 50, y: 50 }, { x: 50, y: 84, rotate: true }],
+        4: [{ x: 24, y: 19 }, { x: 76, y: 19 }, { x: 24, y: 81, rotate: true }, { x: 76, y: 81, rotate: true }],
+        5: [{ x: 24, y: 19 }, { x: 76, y: 19 }, { x: 50, y: 50 }, { x: 24, y: 81, rotate: true }, { x: 76, y: 81, rotate: true }],
+        6: [{ x: 24, y: 18 }, { x: 76, y: 18 }, { x: 24, y: 50 }, { x: 76, y: 50 }, { x: 24, y: 82, rotate: true }, { x: 76, y: 82, rotate: true }],
+        7: [{ x: 24, y: 18 }, { x: 76, y: 18 }, { x: 50, y: 32 }, { x: 24, y: 50 }, { x: 76, y: 50 }, { x: 24, y: 82, rotate: true }, { x: 76, y: 82, rotate: true }],
+        8: [{ x: 24, y: 18 }, { x: 76, y: 18 }, { x: 50, y: 18 }, { x: 24, y: 50 }, { x: 76, y: 50 }, { x: 24, y: 82, rotate: true }, { x: 76, y: 82, rotate: true }, { x: 50, y: 82, rotate: true }],
+        9: [{ x: 24, y: 18 }, { x: 76, y: 18 }, { x: 50, y: 18 }, { x: 24, y: 50 }, { x: 50, y: 50 }, { x: 76, y: 50 }, { x: 24, y: 82, rotate: true }, { x: 76, y: 82, rotate: true }, { x: 50, y: 82, rotate: true }],
+        10: [{ x: 24, y: 16 }, { x: 76, y: 16 }, { x: 50, y: 26 }, { x: 24, y: 38 }, { x: 76, y: 38 }, { x: 24, y: 62, rotate: true }, { x: 76, y: 62, rotate: true }, { x: 50, y: 74, rotate: true }, { x: 24, y: 84, rotate: true }, { x: 76, y: 84, rotate: true }]
+      };
+      return layouts[rank] || [{ x: 50, y: 50 }];
     }
 
     rankLabel(rank) {
@@ -783,22 +891,20 @@
       Object.entries(THEMES).forEach(([id, theme]) => {
         const button = document.createElement('button');
         button.type = 'button';
-        button.className = `theme-choice ${id === 'default' ? 'default-preview' : ''}`;
+        button.className = 'theme-choice';
         button.dataset.theme = id;
-        if (theme.thumb) {
-          const img = document.createElement('img');
-          img.src = theme.thumb;
-          img.alt = '';
-          img.loading = 'lazy';
-          button.append(img);
-        }
+
+        const preview = document.createElement('span');
+        preview.className = 'theme-preview';
+        preview.innerHTML = `<span class="theme-preview-glyph">${theme.banner}</span><span class="theme-preview-mark">${theme.backIcon}</span>`;
+
         const copy = document.createElement('span');
         copy.className = 'theme-copy';
         copy.innerHTML = `<strong>${theme.title}</strong><span>${theme.caption}</span>`;
         const check = document.createElement('span');
         check.className = 'theme-check';
         check.textContent = '✓';
-        button.append(copy, check);
+        button.append(preview, copy, check);
         button.addEventListener('click', () => {
           this.applyTheme(id, true);
           this.els.themeDialog.close();
@@ -853,7 +959,7 @@
         <h3>Стол</h3>
         <ul>
           <li>На семи столбцах карты идут по убыванию и с чередованием красного и чёрного цвета.</li>
-          <li>На пустой столбец можно положить только короля — в этой теме это «${theme.courts[13][1]}».</li>
+          <li>На пустой столбец можно положить только короля — в этой теме это «${theme.courts[13].name}».</li>
           <li>Можно переносить целую открытую последовательность. После переноса верхняя закрытая карта переворачивается автоматически.</li>
           <li>Щёлкните карту, затем место назначения. На компьютере также работает перетаскивание; двойной щелчок отправляет подходящую карту в основание.</li>
         </ul>
